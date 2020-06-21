@@ -48,7 +48,7 @@ public class Main {
         String phone = scanner.nextLine();
         Contact newContact = Contact.saveContact(name, phone);
         if(cellPhone.addContact(newContact)) {
-            System.out.println("New contact added: " + name + " - " + phone);
+            System.out.println("New contact added: " + name + " -> " + phone);
         } else {
             System.out.println("Cannot add, " + name + " is already on file.");
         }
@@ -64,9 +64,15 @@ public class Main {
         }
         System.out.println("Enter new contact name: ");
         String newName = scanner.nextLine();
-        System.out.println("Enter new contact phone number: ");
+        System.out.println("Enter new contact phone number: (leave blank if you do not wish to change the number)");
         String newNum = scanner.nextLine();
-        Contact newContact = Contact.saveContact(newName, newNum);
+        // allow users to change only the name by leaving the phone number field blank
+        Contact newContact;
+        if(newNum.equals("")) {
+            newContact = Contact.saveContact(newName, existingContactRecord.getPhoneNumber());
+        } else {
+            newContact = Contact.saveContact(newName, newNum);
+        }
         if(cellPhone.updateContact(existingContactRecord, newContact)) {
             System.out.println("Successfully updated contact");
         } else {
