@@ -3,19 +3,24 @@ class Statically {
     static #glue = "Epoxy";
     jello = "Jello";
 
-    moveAndShake() {
+    static moveAndShake() {
         console.log("Never stagnate in life.  Be agile, change, and improve...");
     }
 
     static stubborn() {
-        this.moveAndShake();
+        Statically.moveAndShake();
         console.log("Please don't make me change... I just don't like it...");
     }
 
     static explain() {
-        stubborn();
-        console.log(#glue);
+        Statically.stubborn();
+        console.log(Statically.#glue);
         //write an explanation for how the keyword static behaves differently in javascript vs. java.
+        // Made all the methods static so they could call one another. Called all methods on the Statically class since they can;t be called on instances of the class. No real difference between static in JS and static in Java.
+    }
+
+    getGlue() {
+        return Statically.#glue;
     }
 
 }
@@ -24,11 +29,9 @@ class Statically {
 
 const stats = new Statically();
 
-stats.moveAndShake();
-stubborn();
-stats.explain();
+Statically.moveAndShake();
+Statically.stubborn();
+Statically.explain();
 
-console.log(stats.#glue);
+console.log(stats.getGlue());
 console.log(stats.jello);
-
-//Once you have finished getting statistically.js to run, refactor the code here in Java.
